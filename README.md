@@ -37,6 +37,8 @@ $('.some-input-field').sayt({
 
   selectionClass: [string] // Class name of the selected link. Default is 'selection'.
 
+  throttle: [integer] // Thottle in milliseconds. Default is 250.
+
   markup: [function] // A function that returns the markup (as a string) of the search results. This function gets called with one argument, the json result after making the ajax request. Default is an unordered list with links.
 
 });
@@ -63,6 +65,8 @@ $('.some-input-field').sayt({
   url: $(this).data('ajax-url'),
 
   keyboard: true,
+
+  throttle: 300,
 
   markup: function(results) {
     var markup = '';

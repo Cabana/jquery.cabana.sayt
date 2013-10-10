@@ -27,7 +27,9 @@
     selectionClass: 'selection',
     data: function() {
       return { query: $elem.val() };
-    }
+    },
+    minLength: 3,
+    throttle: 250
   };
 
   function Plugin ( element, options ) {
@@ -41,6 +43,7 @@
   var settings;
   var $elem;
   var base;
+  var timer = undefined;
 
   Plugin.prototype = {
     init: function () {
@@ -49,16 +52,22 @@
       settings = base.settings;
 
       $elem.on('keyup', function() {
-        if ($elem.val().length >= 3) {
-          var results = base.fetchResults();
-
-          var markup = '<div class="' + settings.containerClass + '">' + settings.markup(results) + '</div>';
-
-          base.emptyResultsContainer();
-          base.inject(markup);
-        } else {
-          base.emptyResultsContainer();
+        if (timer) {
+          window.clearTimeout(timer);
         }
+
+        timer = window.setTimeout(function() {
+          if ($elem.val().length >= settings.minLength) {
+            var results = base.fetchResults();
+
+            var markup = '<div class="' + settings.containerClass + '">' + settings.markup(results) + '</div>';
+
+            base.emptyResultsContainer();
+            base.inject(markup);
+          } else {
+            base.emptyResultsContainer();
+          }
+        }, settings.throttle);
       }).on('blur', function() {
         base.emptyResultsContainer();
       });
