@@ -70,6 +70,8 @@
             }
           }
         }, settings.throttle);
+      }).on('focus', function() {
+        $('.' + settings.containerClass).find('.' + settings.selectionClass).removeClass(settings.selectionClass);
       });
 
       if (settings.keyboard) {

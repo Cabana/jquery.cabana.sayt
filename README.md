@@ -39,6 +39,10 @@ $('.some-input-field').sayt({
 
   throttle: [integer] // Thottle in milliseconds. Default is 250.
 
+  minLength: [integer] // The minimum length of input value before a search is made. Default is 3.
+
+  resultsContainer: [jQuery object] // A jQuery object to put the results into. If its undefined then the results will be injected after the input. Default is undefined.
+
   markup: [function] // A function that returns the markup (as a string) of the search results. This function gets called with one argument, the json result after making the ajax request. Default is an unordered list with links.
 
 });
