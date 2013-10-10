@@ -25,7 +25,7 @@ Thats all you need to get it working, don't worry there are quite a few options 
 ```javascript
 $('.some-input-field').sayt({
 
-  url: [string] // the url to query for a result. No default, not optional!
+  url: [string] // the url to query for a result. Default is '/'.
 
   keyboard: [boolean] // let the user navigate the result list using the keyboard. Default is false.
 
