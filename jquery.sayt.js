@@ -8,7 +8,6 @@
     markup: function(results) {
       var markup = '';
 
-      markup += '<h3>Results</h3>';
       markup += '<ul>';
 
       for (var i = results.length - 1; i >= 0; i--) {
