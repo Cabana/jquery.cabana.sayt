@@ -4,9 +4,10 @@ $(function(){
     var $input = $(this);
 
     $(this).sayt({
-      url: $input.data('autocomplete-url')
+      url: $input.data('autocomplete-url'),
+      resultsContainer: $('.put-results-here'),
+      keyboard: true
     });
-
   });
 
 });

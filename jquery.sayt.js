@@ -28,7 +28,8 @@
       return { query: $elem.val() };
     },
     minLength: 3,
-    throttle: 250
+    throttle: 250,
+    resultsContainer: undefined
   };
 
   function Plugin ( element, options ) {
@@ -50,25 +51,25 @@
       $elem = $(base.element);
       settings = base.settings;
 
-      $elem.on('keyup', function() {
+      $elem.on('keyup', function(e) {
         if (timer) {
           window.clearTimeout(timer);
         }
 
         timer = window.setTimeout(function() {
-          if ($elem.val().length >= settings.minLength) {
-            var results = base.fetchResults();
+          if (e.keyCode != 40 && e.keyCode != 38) {
+            if ($elem.val().length >= settings.minLength) {
+              var results = base.fetchResults();
 
-            var markup = '<div class="' + settings.containerClass + '">' + settings.markup(results) + '</div>';
+              var markup = '<div class="' + settings.containerClass + '">' + settings.markup(results) + '</div>';
 
-            base.emptyResultsContainer();
-            base.inject(markup);
-          } else {
-            base.emptyResultsContainer();
+              base.emptyResultsContainer();
+              base.inject(markup);
+            } else {
+              base.emptyResultsContainer();
+            }
           }
         }, settings.throttle);
-      }).on('blur', function() {
-        base.emptyResultsContainer();
       });
 
       if (settings.keyboard) {
@@ -80,7 +81,7 @@
       if (settings.resultsContainer) {
         settings.resultsContainer.html('');
       } else {
-        $elem.next('.' + settings.containerClass).remove();
+        $('.' + settings.containerClass).remove();
       }
     },
 
@@ -109,11 +110,11 @@
     },
 
     thereAreResults: function() {
-      return $elem.next('.' + settings.containerClass).length;
+      return $('.' + settings.containerClass).length;
     },
 
     selectionMade: function() {
-      return $elem.next('.' + settings.containerClass).find('.' + settings.selectionClass).length
+      return $('.' + settings.containerClass).find('.' + settings.selectionClass).length
     },
 
     bindKeyboardEvents: function() {
@@ -132,13 +133,13 @@
 
     goToSelection: function() {
       if (base.selectionMade()) {
-        window.location.href = $elem.next('.' + settings.containerClass).find('.' + settings.selectionClass).attr('href');
+        window.location.href = $('.' + settings.containerClass).find('.' + settings.selectionClass).attr('href');
       }
     },
 
     moveSelectionDown: function() {
       if (base.selectionMade()) {
-        var $selection = $elem.next('.' + settings.containerClass).find('.' + settings.selectionClass)
+        var $selection = $('.' + settings.containerClass).find('.' + settings.selectionClass)
 
         var links = $selection.parents('.' + settings.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {
@@ -160,13 +161,13 @@
         };
       } else {
         $elem.blur();
-        $elem.next('.' + settings.containerClass).find('a').first().addClass(settings.selectionClass);
+        $('.' + settings.containerClass).find('a').first().addClass(settings.selectionClass);
       }
     },
 
     moveSelectionUp: function() {
       if (base.selectionMade()) {
-        var $selection = $elem.next('.' + settings.containerClass).find('.' + settings.selectionClass)
+        var $selection = $('.' + settings.containerClass).find('.' + settings.selectionClass)
 
         var links = $selection.parents('.' + settings.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {
@@ -188,7 +189,7 @@
         };
       } else {
         $elem.blur();
-        $elem.next('.' + settings.containerClass).find('a').last().addClass(settings.selectionClass);
+        $('.' + settings.containerClass).find('a').last().addClass(settings.selectionClass);
       }
     }
   };
