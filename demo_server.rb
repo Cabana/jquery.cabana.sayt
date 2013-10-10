@@ -1,3 +1,5 @@
+# this is just server that serves some static json used for testing
+
 require 'sinatra'
 require 'json'
 
