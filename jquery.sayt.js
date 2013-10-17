@@ -10,7 +10,7 @@
 
       markup += '<ul>';
 
-      for (var i = results.length - 1; i >= 0; i--) {
+      for (var i=0; i < results.length; i++) {
         markup += '<li>';
         markup += '<a href="' + results[i].url + '">' + results[i].text + '</a>';
         markup += '</li>';
