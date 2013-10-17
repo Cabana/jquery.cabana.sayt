@@ -5,11 +5,8 @@ $(function(){
 
     $(this).sayt({
       url: $input.data('autocomplete-url'),
-      resultsContainer: $('.put-results-here'),
-      keyboard: true,
-      data: function() {
-        return { query: $input.val() };
-      }
+      containerClass: 'put-results-here',
+      keyboard: true
     });
   });
 

@@ -23,14 +23,13 @@
     requestType: 'GET',
     dataType: 'json',
     contentType: "application/json; charset=utf-8",
-    containerClass: 'ajax-results',
     selectionClass: 'selection',
     data: function($elem) {
       return { query: $elem.val() };
     },
     minLength: 3,
     throttle: 250,
-    resultsContainer: undefined
+    containerClass: 'ajax-results'
   };
 
   function Plugin ( element, options ) {
@@ -52,6 +51,8 @@
       $elem = $(base.element);
       settings = base.settings;
 
+      settings.resultsContainer = $('.' + settings.containerClass);
+
       $elem.on('keyup', function(e) {
         if (timer) {
           window.clearTimeout(timer);
@@ -62,7 +63,12 @@
             if ($elem.val().length >= settings.minLength) {
               var results = base.fetchResults();
 
-              var markup = '<div class="' + settings.containerClass + '">' + settings.markup(results) + '</div>';
+              var markup;
+              if ($('.' + settings.containerClass).length) {
+                markup = settings.markup(results);
+              } else {
+                markup = '<div class="' + settings.containerClass + '">' + settings.markup(results) + '</div>';
+              }
 
               base.emptyResultsContainer();
               base.inject(markup);
@@ -89,7 +95,7 @@
     },
 
     inject: function(markup) {
-      if (settings.resultsContainer) {
+      if (settings.resultsContainer.length) {
         settings.resultsContainer.append(markup);
       } else {
         $elem.after(markup);
