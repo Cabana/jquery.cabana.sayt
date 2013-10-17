@@ -18,7 +18,7 @@ end
 get '/ajax' do
   response = []
 
-  (1..10).to_a.sample.times do
+  10.times do
     response << { url: "http://google.com", text: "google" }
   end
 
