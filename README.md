@@ -33,15 +33,13 @@ $('.some-input-field').sayt({
 
   dataType: [string] // the datatype used by jQuery.ajax(). Default is "json".
 
-  containerClass: [string] // Class name of the div the results will be wrapped in. Default is 'ajax-results'.
+  containerClass: [string] // Class name of the element containing the results. If nothing is set then a div after the input with an `.ajax-results` class will be created.
 
   selectionClass: [string] // Class name of the selected link. Default is 'selection'.
 
   throttle: [integer] // Thottle in milliseconds. Default is 250.
 
   minLength: [integer] // The minimum length of input value before a search is made. Default is 3.
-
-  resultsContainer: [jQuery object] // A jQuery object to put the results into. If its undefined then the results will be injected after the input. Default is undefined.
 
   markup: [function] // A function that returns the markup (as a string) of the search results. This function gets called with one argument, the json result after making the ajax request. Default is an unordered list with links.
 
