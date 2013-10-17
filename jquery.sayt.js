@@ -22,9 +22,10 @@
     },
     requestType: 'GET',
     dataType: 'json',
+    contentType: "application/json; charset=utf-8",
     containerClass: 'ajax-results',
     selectionClass: 'selection',
-    data: function() {
+    data: function($elem) {
       return { query: $elem.val() };
     },
     minLength: 3,
@@ -100,9 +101,10 @@
 
       $.ajax({
         url: settings.url,
+        contentType: settings.contentType,
         type: settings.requestType,
         dataType: settings.dataType,
-        data: settings.data(),
+        data: settings.data($elem),
         async: false
       }).done(function(json) {
         results = json;

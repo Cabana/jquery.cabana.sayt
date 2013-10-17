@@ -45,7 +45,7 @@ $('.some-input-field').sayt({
 
   markup: [function] // A function that returns the markup (as a string) of the search results. This function gets called with one argument, the json result after making the ajax request. Default is an unordered list with links.
 
-  data: [function] // A function that returns the JSON object sent along with the request. Default is { query: <input value> }
+  data: [function] // A function that returns the JSON object sent along with the request. It gets the element passed as argument. Default is { query: <input value> }
 
 });
 ```
@@ -93,8 +93,8 @@ $('.some-input-field').sayt({
 
   requestType: 'POST',
 
-  data: function() {
-    return { query: $(this).val() };
+  data: function(element) {
+    return { query: element.val() };
   }
 
 });
