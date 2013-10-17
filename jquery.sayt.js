@@ -53,7 +53,7 @@
 
       settings.resultsContainer = $('.' + settings.containerClass);
 
-      $elem.on('keyup', function(e) {
+      $elem.on('keydown', function(e) {
         if (timer) {
           window.clearTimeout(timer);
         }
@@ -128,14 +128,16 @@
     },
 
     bindKeyboardEvents: function() {
-      $(document).on('keyup', function(e) {
+      $(document).on('keydown', function(e) {
         if (base.thereAreResults()) {
           if (e.keyCode === 13) {
             base.goToSelection();
           } else if (e.keyCode === 40) {
             base.moveSelectionDown();
+            e.preventDefault();
           } else if (e.keyCode === 38) {
             base.moveSelectionUp();
+            e.preventDefault();
           }
         }
       });
