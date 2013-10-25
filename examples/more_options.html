@@ -20,9 +20,36 @@
     $(function(){
 
       $('#input').sayt({
+
         url: 'http://localhost:4567/ajax',
+
         keyboard: true,
-        containerClass: 'put-results-here'
+
+        throttle: 300,
+
+        markup: function(results) {
+          var markup = '';
+
+          markup += '<h3>Results</h3>';
+          markup += '<ul>';
+
+          for (var i = results.length - 1; i >= 0; i--) {
+            markup += '<li>';
+            markup += '<a href="' + results[i].url + '">' + results[i].text + '</a>';
+            markup += '</li>';
+          };
+
+          markup += '</ul>';
+
+          return markup;
+        },
+
+        requestType: 'POST',
+
+        data: function(element) {
+          return { query: element.val() };
+        }
+
       });
 
     });

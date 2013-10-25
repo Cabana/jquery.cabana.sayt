@@ -61,39 +61,4 @@ By default the `markup()` function expects the result JSON to be array of object
 
 You can of course respond with what ever you want as long as you customize the `markup()` function to be able to handle it. This means that you can include URLs to images, return raw HTML instead of JSON or whatever you want.
 
-Example of using some of the options:
-
-```javascript
-$('.some-input-field').sayt({
-
-  url: $(this).data('ajax-url'),
-
-  keyboard: true,
-
-  throttle: 300,
-
-  markup: function(results) {
-    var markup = '';
-
-    markup += '<h3>Results</h3>';
-    markup += '<ul>';
-
-    for (var i = results.length - 1; i >= 0; i--) {
-      markup += '<li>';
-      markup += '<a href="' + results[i].url + '">' + results[i].text + '</a>';
-      markup += '</li>';
-    };
-
-    markup += '</ul>';
-
-    return markup;
-  },
-
-  requestType: 'POST',
-
-  data: function(element) {
-    return { query: element.val() };
-  }
-
-});
-```
+For examples see the "examples" folder.

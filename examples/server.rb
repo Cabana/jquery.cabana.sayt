@@ -15,10 +15,12 @@ end
 
 get '/ajax' do
   response = []
+  10.times { response << { url: "http://google.com", text: "google" } }
+  response.to_json
+end
 
-  10.times do
-    response << { url: "http://google.com", text: "google" }
-  end
-
+post '/ajax' do
+  response = []
+  10.times { response << { url: "http://google.com", text: "google" } }
   response.to_json
 end
