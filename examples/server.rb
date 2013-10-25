@@ -1,18 +1,16 @@
 # this is just server that serves some static json used for testing
+# start it with `ruby server.rb`
+# requires that Sinatra is installed, install it with `gem install sinatra`
 
 require 'sinatra'
 require 'json'
 
-get '/' do
-  send_file 'demo.html'
+get '/*.html' do
+  send_file params[:splat].first + '.html'
 end
 
-get '/jquery.sayt.js' do
-  send_file 'jquery.sayt.js'
-end
-
-get '/demo.js' do
-  send_file 'demo.js'
+get '/cabana.sayt.js' do
+  send_file '../cabana.sayt.js'
 end
 
 get '/ajax' do

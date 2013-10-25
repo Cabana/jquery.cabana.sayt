@@ -172,6 +172,7 @@
           }
         };
       } else {
+        $elem.blur();
         $('.' + settings.containerClass).find('a').first().addClass(settings.selectionClass);
       }
     },
@@ -199,6 +200,7 @@
           }
         };
       } else {
+        $elem.blur();
         $('.' + settings.containerClass).find('a').last().addClass(settings.selectionClass);
       }
     }
