@@ -1,116 +1,106 @@
+var timer = undefined;
+
 ;(function ( $, window, document, undefined ) {
 
-  var pluginName = "sayt";
+  $.widget("cabana.sayt", {
+    // Options used as defaults
+    options: {
+      url: "/",
+      keyboard: false,
+      markup: function(results) {
+        var markup = '';
 
-  var defaults = {
-    url: "/",
-    keyboard: false,
-    markup: function(results) {
-      var markup = '';
+        markup += '<ul>';
 
-      markup += '<ul>';
+        for (var i=0; i < results.length; i++) {
+          markup += '<li>';
+          markup += '<a href="' + results[i].url + '">' + results[i].text + '</a>';
+          markup += '</li>';
+        };
 
-      for (var i=0; i < results.length; i++) {
-        markup += '<li>';
-        markup += '<a href="' + results[i].url + '">' + results[i].text + '</a>';
-        markup += '</li>';
-      };
+        markup += '</ul>';
 
-      markup += '</ul>';
-
-      return markup;
+        return markup;
+      },
+      requestType: 'GET',
+      dataType: 'json',
+      contentType: "application/json; charset=utf-8",
+      selectionClass: 'selection',
+      data: function($elem) {
+        return { query: $elem.val() };
+      },
+      minLength: 3,
+      throttle: 250,
+      containerClass: 'ajax-results'
     },
-    requestType: 'GET',
-    dataType: 'json',
-    contentType: "application/json; charset=utf-8",
-    selectionClass: 'selection',
-    data: function($elem) {
-      return { query: $elem.val() };
-    },
-    minLength: 3,
-    throttle: 250,
-    containerClass: 'ajax-results'
-  };
 
-  function Plugin ( element, options ) {
-    this.element = element;
-    this.settings = $.extend( {}, defaults, options );
-    this._defaults = defaults;
-    this._name = pluginName;
-    this.init();
-  }
+    // prefix all custom events that this widget will fire: "sayt:someevent"
+    widgetEventPrefix: 'sayt:',
 
-  var settings;
-  var $elem;
-  var base;
-  var timer = undefined;
+    _create: function() {
+      _this = this;
 
-  Plugin.prototype = {
-    init: function () {
-      base = this;
-      $elem = $(base.element);
-      settings = base.settings;
+      _this.options.resultsContainer = $('.' + _this.options.containerClass);
 
-      settings.resultsContainer = $('.' + settings.containerClass);
-
-      $elem.on('keydown', function(e) {
+      _this.element.on('keydown', function(e) {
         if (timer) {
           window.clearTimeout(timer);
         }
 
         timer = window.setTimeout(function() {
           if (e.keyCode != 40 && e.keyCode != 38) {
-            if ($elem.val().length >= settings.minLength) {
-              var results = base.fetchResults();
+            if (_this.element.val().length >= _this.options.minLength) {
+              var results = _this._fetchResults();
 
               var markup;
-              if ($('.' + settings.containerClass).length) {
-                markup = settings.markup(results);
+              if ($('.' + _this.options.containerClass).length) {
+                markup = _this.options.markup(results);
               } else {
-                markup = '<div class="' + settings.containerClass + '">' + settings.markup(results) + '</div>';
+                markup = '<div class="' + _this.options.containerClass + '">' + _this.options.markup(results) + '</div>';
               }
 
-              base.emptyResultsContainer();
-              base.inject(markup);
+              _this._emptyResultsContainer();
+              _this._inject(markup);
             } else {
-              base.emptyResultsContainer();
+              _this._emptyResultsContainer();
             }
           }
-        }, settings.throttle);
+        }, _this.options.throttle);
       }).on('focus', function() {
-        $('.' + settings.containerClass).find('.' + settings.selectionClass).removeClass(settings.selectionClass);
+        $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass).removeClass(_this.options.selectionClass);
       });
 
-      if (settings.keyboard) {
-        base.bindKeyboardEvents();
+      if (_this.options.keyboard) {
+        _this._bindKeyboardEvents();
       }
     },
 
-    emptyResultsContainer: function() {
-      if (settings.resultsContainer) {
-        settings.resultsContainer.html('');
+    _emptyResultsContainer: function() {
+      if (this.options.resultsContainer) {
+        this.options.resultsContainer.html('');
       } else {
-        $('.' + settings.containerClass).remove();
+        console.log("two");
       }
     },
 
-    inject: function(markup) {
-      if (settings.resultsContainer.length) {
-        settings.resultsContainer.append(markup);
+    _inject: function(markup) {
+      if (this.options.resultsContainer.length) {
+        this.options.resultsContainer.append(markup);
       } else {
-        $elem.after(markup);
+        this.element.after(markup);
       }
     },
 
-    fetchResults: function() {
+    _fetchResults: function() {
       var results;
+      var _this = this;
 
       $.ajax({
-        url: settings.url,
-        contentType: settings.contentType,
-        type: settings.requestType,
-        dataType: settings.dataType,
-        data: settings.data($elem),
+        url: _this.options.url,
+        contentType: _this.options.contentType,
+        type: _this.options.requestType,
+        dataType: _this.options.dataType,
+        data: _this.options.data(_this.element),
         async: false
       }).done(function(json) {
         results = json;
@@ -119,99 +109,97 @@
       return results;
     },
 
-    thereAreResults: function() {
-      return $('.' + settings.containerClass).length;
+    _thereAreResults: function() {
+      return $('.' + this.options.containerClass).length;
     },
 
-    selectionMade: function() {
-      return $('.' + settings.containerClass).find('.' + settings.selectionClass).length
+    _selectionMade: function() {
+      return $('.' + this.options.containerClass).find('.' + this.options.selectionClass).length
     },
 
-    bindKeyboardEvents: function() {
+    _bindKeyboardEvents: function() {
+      var _this = this;
+
       $(document).on('keydown', function(e) {
-        if (base.thereAreResults()) {
+        if (_this._thereAreResults()) {
           if (e.keyCode === 13) {
-            base.goToSelection();
+            _this._goToSelection();
           } else if (e.keyCode === 40) {
-            base.moveSelectionDown();
+            _this._moveSelectionDown();
             e.preventDefault();
           } else if (e.keyCode === 38) {
-            base.moveSelectionUp();
+            _this._moveSelectionUp();
             e.preventDefault();
           }
         }
       });
     },
 
-    goToSelection: function() {
-      if (base.selectionMade()) {
-        window.location.href = $('.' + settings.containerClass).find('.' + settings.selectionClass).attr('href');
+    _goToSelection: function() {
+      if (this._selectionMade()) {
+        window.location.href = $('.' + this.options.containerClass).find('.' + this.options.selectionClass).attr('href');
       }
     },
 
-    moveSelectionDown: function() {
-      if (base.selectionMade()) {
-        var $selection = $('.' + settings.containerClass).find('.' + settings.selectionClass)
+    _moveSelectionDown: function() {
+      var _this = this;
 
-        var links = $selection.parents('.' + settings.containerClass).find('a');
+      if (_this.selectionMade()) {
+        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
+
+        var links = $selection.parents('.' + _this.options.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {
-          if ($(links[i]).hasClass(settings.selectionClass)) {
+          if ($(links[i]).hasClass(_this.options.selectionClass)) {
             var $link = $(links[i]);
             var $nextLink = $(links[i+1]);
             var $lastLink = $(links[links.length-1]);
 
-            $link.removeClass(settings.selectionClass);
+            $link.removeClass(_this.options.selectionClass);
 
             if ($link.is($lastLink)) {
-              $elem.focus();
+              _this.element.focus();
             } else {
-              $nextLink.addClass(settings.selectionClass);
+              $nextLink.addClass(_this.options.selectionClass);
             }
 
             break;
           }
         };
       } else {
-        $elem.blur();
-        $('.' + settings.containerClass).find('a').first().addClass(settings.selectionClass);
+        _this.element.blur();
+        $('.' + _this.options.containerClass).find('a').first().addClass(_this.options.selectionClass);
       }
     },
 
-    moveSelectionUp: function() {
-      if (base.selectionMade()) {
-        var $selection = $('.' + settings.containerClass).find('.' + settings.selectionClass)
+    _moveSelectionUp: function() {
+      var _this = this;
 
-        var links = $selection.parents('.' + settings.containerClass).find('a');
+      if (_this.selectionMade()) {
+        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
+
+        var links = $selection.parents('.' + _this.options.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {
-          if ($(links[i]).hasClass(settings.selectionClass)) {
+          if ($(links[i]).hasClass(_this.options.selectionClass)) {
             var $link = $(links[i]);
             var $prevLink = $(links[i-1]);
             var $firstLink = $(links[0]);
 
-            $link.removeClass(settings.selectionClass);
+            $link.removeClass(_this.options.selectionClass);
 
             if ($link.is($firstLink)) {
-              $elem.focus();
+              _this.element.focus();
             } else {
-              $prevLink.addClass(settings.selectionClass);
+              $prevLink.addClass(_this.options.selectionClass);
             }
 
             break;
           }
         };
       } else {
-        $elem.blur();
-        $('.' + settings.containerClass).find('a').last().addClass(settings.selectionClass);
+        _this.element.blur();
+        $('.' + _this.options.containerClass).find('a').last().addClass(_this.options.selectionClass);
       }
     }
-  };
-
-  $.fn[ pluginName ] = function ( options ) {
-    return this.each(function() {
-      if ( !$.data( this, "plugin_" + pluginName ) ) {
-        $.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
-      }
-    });
-  };
+  });
 
 })( jQuery, window, document );

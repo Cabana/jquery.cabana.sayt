@@ -3,6 +3,7 @@
 # requires that Sinatra is installed, install it with `gem install sinatra`
 
 require 'sinatra'
+require 'google-search'
 require 'json'
 
 get '/*.html' do
@@ -14,13 +15,13 @@ get '/cabana.sayt.js' do
 end
 
 get '/ajax' do
-  response = []
-  10.times { response << { url: "http://google.com", text: "google" } }
-  response.to_json
+  results = Google::Search::Web.new(query: params[:query]).all_items[1..10].map do |result|
+    { url: result.uri, text: result.title }
+  end.to_json
 end
 
 post '/ajax' do
-  response = []
-  10.times { response << { url: "http://google.com", text: "google" } }
-  response.to_json
+  results = Google::Search::Web.new(query: params[:query]).all_items[1..10].map do |result|
+    { url: result.uri, text: result.title }
+  end.to_json
 end
