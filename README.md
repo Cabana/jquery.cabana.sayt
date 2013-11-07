@@ -2,13 +2,12 @@
 
 jQuery plugin for quickly implementing search as you type functionality.
 
-## How to use
+## Dependencies
 
-1. Include jQuery.
-2. Include the plugin.
-3. Call it.
+- jQuery library
+- jQuery UI Core library
 
-## Example
+## Usage
 
 Here is an example of how you might call the plugin
 
@@ -33,7 +32,7 @@ $('.some-input-field').sayt({
 
   dataType: [string] // the datatype used by jQuery.ajax(). Default is "json".
 
-  containerClass: [string] // Class name of the element containing the results. If nothing is set then a div after the input with an `.ajax-results` class will be created.
+  containerClass: [string] // Class name of the element containing the results. If nothing is set then a div after the input with a `.ajax-results` class will be created.
 
   selectionClass: [string] // Class name of the selected link. Default is 'selection'.
 
@@ -48,7 +47,7 @@ $('.some-input-field').sayt({
 });
 ```
 
-By default the `markup()` function expects the result JSON to be array of objects having a `url` and `text` attribute. Here is an example:
+By default the `markup()` function expects the resulting JSON to be array of objects having a `url` and `text` attribute. Here is an example:
 
 ```javascript
 [
@@ -61,4 +60,19 @@ By default the `markup()` function expects the result JSON to be array of object
 
 You can of course respond with what ever you want as long as you customize the `markup()` function to be able to handle it. This means that you can include URLs to images, return raw HTML instead of JSON or whatever you want.
 
-For examples see the "examples" folder.
+## Events
+
+- `sayt:fetch:start`: Fired when the result fetching begins. Data passed along is the element on which the plugin was instantiated, the options and the data passed along with the ajax request.
+- `sayt:fetch:complete`: Fired when the result fetching is completed. Again the element, options and data along with the results are passed along with the event.
+
+## Methods
+
+- `destroy`: Remove the sayt functionality by unbinding the events and removing the results container.
+
+## Viewing examples
+
+To get the best experience (and easier testing) the examples require a server to send the requests too.
+
+To install the server's dependencies run `bundle install`. This will install Sinatra and the Google search Ruby gem.
+
+To start the server run `ruby server.rb` from within the examples folder. You can then vist localhost:4567/basis.html or one of the other example HTML files.
