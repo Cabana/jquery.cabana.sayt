@@ -40,6 +40,10 @@ var timer = undefined;
     _create: function() {
       _this = this;
 
+      // the results container isn't there so lets make it
+      if ($('.' + _this.options.containerClass).length === 0) {
+        this.element.after('<div class="' + _this.options.containerClass + '"></div>');
+      }
       _this.options.resultsContainer = $('.' + _this.options.containerClass);
 
       _this.element.on('keydown', function(e) {
@@ -56,7 +60,9 @@ var timer = undefined;
               if ($('.' + _this.options.containerClass).length) {
                 markup = _this.options.markup(results);
               } else {
-                markup = '<div class="' + _this.options.containerClass + '">' + _this.options.markup(results) + '</div>';
+                markup = '<div class="' + _this.options.containerClass + '">' +
+                           _this.options.markup(results) +
+                         '</div>';
               }
 
               _this._emptyResultsContainer();
@@ -78,8 +84,6 @@ var timer = undefined;
     _emptyResultsContainer: function() {
       if (this.options.resultsContainer) {
         this.options.resultsContainer.html('');
-      } else {
-        console.log("two");
       }
     },
 
@@ -114,7 +118,7 @@ var timer = undefined;
     },
 
     _selectionMade: function() {
-      return $('.' + this.options.containerClass).find('.' + this.options.selectionClass).length
+      return $('.' + this.options.containerClass).find('.' + this.options.selectionClass).length;
     },
 
     _bindKeyboardEvents: function() {
@@ -144,7 +148,7 @@ var timer = undefined;
     _moveSelectionDown: function() {
       var _this = this;
 
-      if (_this.selectionMade()) {
+      if (_this._selectionMade()) {
         var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
 
         var links = $selection.parents('.' + _this.options.containerClass).find('a');
@@ -174,7 +178,7 @@ var timer = undefined;
     _moveSelectionUp: function() {
       var _this = this;
 
-      if (_this.selectionMade()) {
+      if (_this._selectionMade()) {
         var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
 
         var links = $selection.parents('.' + _this.options.containerClass).find('a');
