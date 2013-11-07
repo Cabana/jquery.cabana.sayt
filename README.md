@@ -75,4 +75,4 @@ To get the best experience (and easier testing) the examples require a server to
 
 To install the server's dependencies run `bundle install`. This will install Sinatra and the Google search Ruby gem.
 
-To start the server run `ruby server.rb` from within the examples folder. You can then vist localhost:4567/basis.html or one of the other example HTML files.
+To start the server run `ruby server.rb` from within the examples folder. You can then vist [localhost:4567/basis.html](localhost:4567/basis.html) or one of the other example HTML files.
