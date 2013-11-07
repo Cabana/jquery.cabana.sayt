@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jquery.cabana.sayt - basic</title>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+  <style>
+    .selection {
+      background: #ccc;
+    }
+  </style>
+
+  <script src="http://localhost:4567/cabana.sayt.js"></script>
+
+  <script>
+    $(function(){
+
+      $('#input').sayt({ url: 'http://localhost:4567/ajax' });
+
+    });
+  </script>
+</head>
+<body>
+
+  <form action="http://github.com/">
+    <input id="input" type="text">
+    <input type="submit">
+  </form>
+
+</div>
+</body>
+</html>
