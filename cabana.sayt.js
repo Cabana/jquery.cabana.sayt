@@ -9,17 +9,13 @@ var timer = undefined;
       keyboard: false,
       markup: function(results) {
         var markup = '';
-
         markup += '<ul>';
-
         for (var i=0; i < results.length; i++) {
           markup += '<li>';
           markup += '<a href="' + results[i].url + '">' + results[i].text + '</a>';
           markup += '</li>';
         };
-
         markup += '</ul>';
-
         return markup;
       },
       requestType: 'GET',
@@ -34,7 +30,7 @@ var timer = undefined;
       containerClass: 'ajax-results'
     },
 
-    // prefix all custom events that this widget will fire: "sayt:someevent"
+    // prefix all custom events that this widget will fire: "sayt:"
     widgetEventPrefix: 'sayt:',
 
     _create: function() {
@@ -99,6 +95,12 @@ var timer = undefined;
       var results;
       var _this = this;
 
+      _this._trigger("fetch:starting", null, {
+        element: this.element,
+        options: this.options,
+        data: _this.options.data(_this.element)
+      });
+
       $.ajax({
         url: _this.options.url,
         contentType: _this.options.contentType,
@@ -108,6 +110,13 @@ var timer = undefined;
         async: false
       }).done(function(json) {
         results = json;
+      });
+
+      _this._trigger("fetch:complete", null, {
+        element: this.element,
+        options: this.options,
+        data: _this.options.data(_this.element),
+        results: results
       });
 
       return results;
@@ -203,6 +212,11 @@ var timer = undefined;
         _this.element.blur();
         $('.' + _this.options.containerClass).find('a').last().addClass(_this.options.selectionClass);
       }
+    },
+
+    destroy: function() {
+      this.element.unbind();
+      this.options.resultsContainer.remove();
     }
   });
 

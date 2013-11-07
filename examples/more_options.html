@@ -1,5 +1,3 @@
-<!-- this file can be found by starting server.rb and going to localhost:4567/more_options.html -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,36 +18,24 @@
     $(function(){
 
       $('#input').sayt({
-
         url: 'http://localhost:4567/ajax',
-
         keyboard: true,
-
         throttle: 300,
-
         markup: function(results) {
           var markup = '';
-
           markup += '<h3>Results</h3>';
           markup += '<ul>';
-
           for (var i = results.length - 1; i >= 0; i--) {
             markup += '<li>';
             markup += '<a href="' + results[i].url + '">' + results[i].text + '</a>';
             markup += '</li>';
           };
-
           markup += '</ul>';
-
           return markup;
         },
-
         requestType: 'GET',
-
-        data: function(element) {
-          return { query: element.val() };
-        }
-
+        containerClass: 'put-results-here',
+        data: function(element) { return { query: element.val() }; }
       });
 
     });

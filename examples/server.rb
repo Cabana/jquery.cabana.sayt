@@ -3,7 +3,7 @@
 # install dependencies with `bundle install`
 # and start the server with `cd examples && ruby server.rb`
 # then point your browser to http://localhost:4567/basic.html
-# or to http://localhost:4567/more_options.html
+# or one of the other example html files
 
 require 'sinatra'
 require 'google-search'
