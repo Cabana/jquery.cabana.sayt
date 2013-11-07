@@ -1,6 +1,9 @@
-# this is just server that serves some static json used for testing
-# start it with `ruby server.rb`
-# requires that Sinatra is installed, install it with `gem install sinatra`
+# this is just server that searches google and returns the first 10 results as json
+# used for testing
+# install dependencies with `bundle install`
+# and start the server with `cd examples && ruby server.rb`
+# then point your browser to http://localhost:4567/basic.html
+# or to http://localhost:4567/more_options.html
 
 require 'sinatra'
 require 'google-search'
