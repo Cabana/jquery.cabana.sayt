@@ -44,7 +44,7 @@
           return markup;
         },
 
-        requestType: 'POST',
+        requestType: 'GET',
 
         data: function(element) {
           return { query: element.val() };
@@ -58,7 +58,7 @@
 <body>
 
   <form action="http://github.com/">
-    <input id="input" type="text">
+    <input id="input" type="text" autofocus>
     <input type="submit">
   </form>
 
