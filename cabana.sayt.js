@@ -1,6 +1,5 @@
-var timer = undefined;
-
 ;(function ( $, window, document, undefined ) {
+  var timer = undefined;
 
   $.widget("cabana.sayt", {
     // Options used as defaults
