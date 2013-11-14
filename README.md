@@ -82,6 +82,7 @@ Most options can also be set via `data-` attributes on the element. They will ov
 ## Methods
 
 - `destroy`: Remove the sayt functionality by unbinding the events and removing the results container.
+- `option`: Sets an option associated with the specified `optionName`. Options can be changed in the fly after the plugin has been initialized.
 
 ## Viewing examples
 

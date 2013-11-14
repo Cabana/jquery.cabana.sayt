@@ -73,9 +73,7 @@
         $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass).removeClass(_this.options.selectionClass);
       });
 
-      if (_this.options.keyboard) {
-        _this._bindKeyboardEvents();
-      }
+      _this._bindKeyboardEvents();
     },
 
     _applyDataParams: function() {
@@ -152,19 +150,21 @@
     _bindKeyboardEvents: function() {
       var _this = this;
 
-      $(document).on('keydown', function(e) {
-        if (_this._thereAreResults()) {
-          if (e.keyCode === 13) {
-            _this._goToSelection();
-          } else if (e.keyCode === 40) {
-            _this._moveSelectionDown();
-            e.preventDefault();
-          } else if (e.keyCode === 38) {
-            _this._moveSelectionUp();
-            e.preventDefault();
+      if (_this.options.keyboard) {
+        $(document).off('keydown').on('keydown', function(e) {
+          if (_this._thereAreResults()) {
+            if (e.keyCode === 13) {
+              _this._goToSelection();
+            } else if (e.keyCode === 40) {
+              _this._moveSelectionDown();
+              e.preventDefault();
+            } else if (e.keyCode === 38) {
+              _this._moveSelectionUp();
+              e.preventDefault();
+            }
           }
-        }
-      });
+        });
+      }
     },
 
     _goToSelection: function() {
@@ -236,6 +236,12 @@
     destroy: function() {
       this.element.unbind();
       this.options.resultsContainer.remove();
+    },
+
+    _setOption: function (key, value) {
+      this.options[key] = value;
+      this._bindKeyboardEvents();
+      this._super( "_setOption", key, value );
     }
   });
 
