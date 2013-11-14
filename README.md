@@ -60,6 +60,20 @@ By default the `markup()` function expects the resulting JSON to be array of obj
 
 You can of course respond with what ever you want as long as you customize the `markup()` function to be able to handle it. This means that you can include URLs to images, return raw HTML instead of JSON or whatever you want.
 
+## Data params
+
+Most options can also be set via `data-` attributes on the element. They will override any options set with initializing the plugin.
+
+- `data-sayt-url`
+- `data-sayt-keyboard`
+- `data-sayt-request-type`
+- `data-sayt-data-type`
+- `data-sayt-content-type`
+- `data-sayt-selection-class`
+- `data-sayt-min-lengt`
+- `data-sayt-throttle`
+- `data-sayt-container-class`
+
 ## Events
 
 - `sayt:fetch:start`: Fired when the result fetching begins. Data passed along is the element on which the plugin was instantiated, the options and the data passed along with the ajax request.

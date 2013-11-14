@@ -35,6 +35,8 @@
     _create: function() {
       _this = this;
 
+      _this._applyDataParams();
+
       // the results container isn't there so lets make it
       if ($('.' + _this.options.containerClass).length === 0) {
         this.element.after('<div class="' + _this.options.containerClass + '"></div>');
@@ -73,6 +75,24 @@
 
       if (_this.options.keyboard) {
         _this._bindKeyboardEvents();
+      }
+    },
+
+    _applyDataParams: function() {
+      this._applyDataParam('keyboard', 'sayt-keyboard');
+      this._applyDataParam('url', 'sayt-url');
+      this._applyDataParam('requestType', 'sayt-request-type');
+      this._applyDataParam('dataType', 'sayt-data-type');
+      this._applyDataParam('contentType', 'sayt-content-type');
+      this._applyDataParam('selectionClass', 'sayt-selection-class');
+      this._applyDataParam('minLength', 'sayt-min-length');
+      this._applyDataParam('throttle', 'sayt-throttle');
+      this._applyDataParam('containerClass', 'sayt-container-class');
+    },
+
+    _applyDataParam: function(optionToSet, dataParam) {
+      if ($(this.element).data(dataParam)) {
+        this.options[optionToSet] = $(this.element).data(dataParam);
       }
     },
 
