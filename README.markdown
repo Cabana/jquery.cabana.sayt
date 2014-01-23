@@ -51,10 +51,8 @@ By default the `markup()` function expects the resulting JSON to be array of obj
 
 ```javascript
 [
-  {"url":"http://google.com/", "text":"google"},
-  {"url":"http://google.com/", "text":"google"},
-  {"url":"http://google.com/", "text":"google"},
-  {"url":"http://google.com/", "text":"google"}
+  {"url":"http://northkorea.com/yo", "text":"North korea lands on sun"},
+  {"url":"http://yahoo.com/man-takes-flight", "text":"Super awesome man takes flight"},
 ]
 ```
 
