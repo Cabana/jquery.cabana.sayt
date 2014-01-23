@@ -9,6 +9,12 @@ require 'sinatra'
 require 'google-search'
 require 'json'
 
+get '/' do
+  Dir.glob("*.html").inject("") do |html, html_file|
+    html += "<a href='#{html_file}'>#{html_file.sub(".html", "")}</a><br>"
+  end
+end
+
 get '/*.html' do
   send_file params[:splat].first + '.html'
 end
