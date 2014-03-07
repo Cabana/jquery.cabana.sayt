@@ -19,8 +19,8 @@ get '/*.html' do
   send_file params[:splat].first + '.html'
 end
 
-get '/cabana.sayt.js' do
-  send_file '../cabana.sayt.js'
+get '/jquery.sayt.js' do
+  send_file '../jquery.sayt.js'
 end
 
 get '/ajax' do
