@@ -26,7 +26,10 @@
       },
       minLength: 3,
       throttle: 250,
-      containerClass: 'ajax-results'
+      containerClass: 'ajax-results',
+      enterPressedHandler: function(selection, event) {
+        window.location.href = $(selection).attr('href');
+      }
     },
 
     // prefix all custom events that this widget will fire: "sayt:"
@@ -157,7 +160,7 @@
         $(document).off('keydown').on('keydown', function(e) {
           if (_this._thereAreResults()) {
             if (e.keyCode === 13) {
-              _this._goToSelection();
+              _this._goToSelection(e);
             } else if (e.keyCode === 40) {
               _this._moveSelectionDown();
               e.preventDefault();
@@ -170,9 +173,10 @@
       }
     },
 
-    _goToSelection: function() {
+    _goToSelection: function(event) {
       if (this._selectionMade()) {
-        window.location.href = $('.' + this.options.containerClass).find('.' + this.options.selectionClass).attr('href');
+        var selection = $('.'+this.options.containerClass).find('.'+this.options.selectionClass)[0];
+        this.options.enterPressedHandler(selection, event);
       }
     },
 
