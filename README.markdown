@@ -44,6 +44,8 @@ $('.some-input-field').sayt({
 
   data: [function] // A function that returns the JSON object sent along with the request. It gets the element passed as argument. Default is { query: <input value> }
 
+  enterPressedHandler: [function] // A function that will be called when the user hits the enter key while having a selection made. By default this will go to the link of the selection but you can customize this. The function will be passed the selected element and the event that was triggered. See the more_options.html for an example.
+
 });
 ```
 

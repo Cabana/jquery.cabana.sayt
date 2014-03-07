@@ -35,7 +35,10 @@
         },
         requestType: 'GET',
         containerClass: 'put-results-here',
-        data: function(element) { return { query: element.val() }; }
+        data: function(element) { return { query: element.val() }; },
+        enterPressedHandler: function(selection, event) {
+          console.log(selection, event);
+        }
       });
 
     });
