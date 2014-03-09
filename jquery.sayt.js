@@ -114,6 +114,12 @@
       } else {
         this.element.after(markup);
       }
+
+      this._trigger("results:injected", null, {
+        element: this.element,
+        options: this.options,
+        data: this.options.data(this.element)
+      });
     },
 
     _fetchResults: function() {

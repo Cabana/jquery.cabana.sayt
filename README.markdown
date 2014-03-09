@@ -78,6 +78,7 @@ Most options can also be set via `data-` attributes on the element. They will ov
 
 - `sayt:fetch:start`: Fired when the result fetching begins. Data passed along is the element on which the plugin was instantiated, the options and the data passed along with the ajax request.
 - `sayt:fetch:complete`: Fired when the result fetching is completed. Again the element, options and data along with the results are passed along with the event.
+- `sayt:results:injected`: Fired when the whole process is done and the results are in the DOM.
 
 ## Methods
 
