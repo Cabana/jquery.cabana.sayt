@@ -49,7 +49,7 @@
       }
       _this.options.resultsContainer = $('.' + _this.options.containerClass);
 
-      $(document).on("keydown", _this.element, function(e){
+      $(document).on('keyup', _this.element, function(e) {
         if (timer) {
           window.clearTimeout(timer);
         }
@@ -75,7 +75,9 @@
             }
           }
         }, _this.options.throttle);
-      }).on('focus', function() {
+      });
+
+      $(document).on('focus', _this.element, function() {
         $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass).removeClass(_this.options.selectionClass);
       });
 
