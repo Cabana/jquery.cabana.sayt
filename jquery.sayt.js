@@ -49,7 +49,7 @@
       }
       _this.options.resultsContainer = $('.' + _this.options.containerClass);
 
-      _this.element.on('keydown', function(e) {
+      $(document).on("keydown", _this.element, function(e){
         if (timer) {
           window.clearTimeout(timer);
         }
