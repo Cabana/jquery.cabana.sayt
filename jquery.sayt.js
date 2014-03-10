@@ -49,6 +49,20 @@
       }
       _this.options.resultsContainer = $('.' + _this.options.containerClass);
 
+      $(document).on("sayt:fetch:complete", function(_event, data) {
+        var markup;
+        if ($('.' + _this.options.containerClass).length) {
+          markup = _this.options.markup(data.results);
+        } else {
+          markup = '<div class="' + _this.options.containerClass + '">' +
+                     _this.options.markup(data.results) +
+                   '</div>';
+        }
+
+        _this._emptyResultsContainer();
+        _this._inject(markup);
+      });
+
       $(document).on('keyup', _this.element, function(e) {
         if (timer) {
           window.clearTimeout(timer);
@@ -57,19 +71,7 @@
         timer = window.setTimeout(function() {
           if (e.keyCode != 40 && e.keyCode != 38) {
             if (_this.element.val().length >= _this.options.minLength) {
-              var results = _this._fetchResults();
-
-              var markup;
-              if ($('.' + _this.options.containerClass).length) {
-                markup = _this.options.markup(results);
-              } else {
-                markup = '<div class="' + _this.options.containerClass + '">' +
-                           _this.options.markup(results) +
-                         '</div>';
-              }
-
-              _this._emptyResultsContainer();
-              _this._inject(markup);
+              _this._fetchResults();
             } else {
               _this._emptyResultsContainer();
             }
@@ -138,19 +140,15 @@
         type: _this.options.requestType,
         dataType: _this.options.dataType,
         data: _this.options.data(_this.element),
-        async: false
+        async: true
       }).done(function(json) {
-        results = json;
+        _this._trigger("fetch:complete", null, {
+          element: this.element,
+          options: this.options,
+          data: _this.options.data(_this.element),
+          results: json
+        });
       });
-
-      _this._trigger("fetch:complete", null, {
-        element: this.element,
-        options: this.options,
-        data: _this.options.data(_this.element),
-        results: results
-      });
-
-      return results;
     },
 
     _thereAreResults: function() {
