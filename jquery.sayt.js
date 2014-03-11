@@ -190,7 +190,7 @@
       var _this = this;
 
       if (_this._selectionMade()) {
-        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
+        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass);
 
         var links = $selection.parents('.' + _this.options.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {
@@ -220,7 +220,7 @@
       var _this = this;
 
       if (_this._selectionMade()) {
-        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
+        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass);
 
         var links = $selection.parents('.' + _this.options.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {
