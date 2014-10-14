@@ -29,7 +29,8 @@
       containerClass: 'ajax-results',
       enterPressedHandler: function(selection, event) {
         window.location.href = $(selection).attr('href');
-      }
+      },
+      searchOnFocus: false
     },
 
     // prefix all custom events that this widget will fire: "sayt:"
@@ -63,10 +64,8 @@
         _this._inject(markup);
       });
 
-      $(document).on('keyup', _this.element, function(e) {
-        if (timer) {
-          window.clearTimeout(timer);
-        }
+      var search = function(e) {
+        if (timer) window.clearTimeout(timer);
 
         timer = window.setTimeout(function() {
           if (e.keyCode != 40 && e.keyCode != 38) {
@@ -77,9 +76,14 @@
             }
           }
         }, _this.options.throttle);
-      });
+      };
+
+      if (_this.options.searchOnFocus) $(_this.element).focus(search);
+      $(document).on('keyup focus', _this.element, search);
 
       $(document).on('focus', _this.element, function() {
+        console.log("focus");
+
         $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass).removeClass(_this.options.selectionClass);
       });
 
@@ -190,7 +194,7 @@
       var _this = this;
 
       if (_this._selectionMade()) {
-        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass);
+        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
 
         var links = $selection.parents('.' + _this.options.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {
@@ -220,7 +224,7 @@
       var _this = this;
 
       if (_this._selectionMade()) {
-        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass);
+        var $selection = $('.' + _this.options.containerClass).find('.' + _this.options.selectionClass)
 
         var links = $selection.parents('.' + _this.options.containerClass).find('a');
         for (var i = links.length - 1; i >= 0; i--) {

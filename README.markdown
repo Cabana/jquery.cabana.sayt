@@ -46,6 +46,8 @@ $('.some-input-field').sayt({
 
   enterPressedHandler: [function] // A function that will be called when the user hits the enter key while having a selection made. By default this will go to the link of the selection but you can customize this. The function will be passed the selected element and the event that was triggered. See the more_options.html for an example.
 
+  searchOnFocus: [boolean] // Whether or not to search when the user focuses on the field
+
 });
 ```
 
